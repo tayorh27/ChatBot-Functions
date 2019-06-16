@@ -326,17 +326,24 @@ export const receiveMessages = functions.database.ref('/rooms/{roomId}/messages/
                 }
             }
         } else {
+            const search_resp = "fine thank you good ok okay k kk awesome wonderful not bad";
 
             if (user_text.includes("hi") || user_text.includes("hello") || user_text.includes("what's up") || user_text.includes("good morning")) {
-                const responses = ["Good day", "Hello, how may I help you today?", "Welcome to ChatBot", "I guess you're good", "Shall we get started?"];
-                const rand = Math.floor(Math.random() * (responses.length - 1)) + 0;
+                const response = "Hi, how do you do?";
+                //const rand = Math.floor(Math.random() * (responses.length - 1)) + 0;
                 return admin.database().ref(`rooms/${roomId}/messages`).child(keyId).set({
                     'display_type': 'bot',
                     'created_date': mDate,
-                    'text': responses[rand]
+                    'text': response
                 });
 
-            } else if (user_text.includes("help")) { //
+            } else if (search_resp.search(user_text) > 0) {
+                return admin.database().ref(`rooms/${roomId}/messages`).child(keyId).set({
+                    'display_type': 'bot',
+                    'created_date': mDate,
+                    'text': "Cool, good to meet you. I am Tara, your talent and career assistant.<br>Are you a job seeker or an employer?<br>[Job seeker]<br>[Employer]"
+                });
+            }else if (user_text.includes("help")) { //
 
                 return admin.database().ref(`rooms/${roomId}/messages`).child(keyId).set({
                     'display_type': 'bot',
